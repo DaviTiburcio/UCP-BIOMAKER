@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Biologia: Organelas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="flash-overlay"></div>
+
+    <div class="main-container">
+
+        <div id="start-screen" class="screen active">
+            <h1>Quiz de Biologia</h1>
+            <p class="subtitle">Teste seus conhecimentos sobre as organelas celulares. Você está pronto?</p>
+            <button id="start-btn" class="nav-btn">Iniciar Quiz</button>
+        </div>
+
+        <div id="quiz-container" class="screen">
+            
+            <img src="IMGS/IF.png" alt="Logo IFTM" class="corner-logo">
+
+            <div id="quiz-header">
+                <span id="question-counter">Pergunta 1 de 8</span>
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+            
+            <div id="question-card">
+                <img id="question-image" src="" alt="Imagem da pergunta" class="hide">
+                <h2 id="question-text"></h2>
+            </div>
+
+            <div id="options-container" class="options-grid">
+                </div>
+            <button id="next-btn" class="nav-btn hide">Próxima Pergunta</button>
+        </div>
+
+        <div id="results-container" class="screen">
+            <h2>Resultados do Quiz</h2>
+            <p id="score-text">Você acertou 0 de 8 perguntas!</p>
+            <p id="result-message">Continue tentando!</p> 
+            <button id="restart-btn" class="nav-btn">Tentar Novamente</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
