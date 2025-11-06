@@ -1,0 +1,358 @@
+/* :root ... (todo o seu CSS anterior permanece igual) ... */
+:root {
+    --color-green-dark: #1a4d2e;
+    --color-green-medium: #2e7d32;
+    --color-green-light: #a8e063;
+    --color-green-bg: #56ab2f;
+    --color-green-correct: #66bb6a;
+    --color-green-correct-border: #388e3c;
+    --color-red-incorrect: #ef5350;
+    --color-red-incorrect-border: #d32f2f;
+    --color-blue-nav: #1e88e5;
+    --color-blue-nav-hover: #1976d2;
+    --color-white: #ffffff;
+    --color-text-primary: #333;
+    --color-text-secondary: #555;
+    --color-bg-light: #f1f8e9;
+    --color-border-light: #aed581;
+}
+
+/* ... (Estilos gerais, body, .main-container, .screen, etc.) ... */
+/* ... (Todo o CSS que você já tem fica aqui, inalterado) ... */
+* {
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--color-text-primary);
+    
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(135deg, 
+            var(--color-green-light), 
+            var(--color-green-bg), 
+            var(--color-green-medium)
+        );
+
+    background-size: 
+        20px 20px,
+        20px 20px,
+        400% 400%; 
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    
+    animation: backgroundAnimation 20s ease infinite;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 700px;
+    overflow: hidden;
+}
+
+h1, h2 {
+    color: var(--color-green-dark);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+.screen {
+    background-color: var(--color-white);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    display: none; 
+    animation: fadeIn 0.6s ease-out;
+}
+
+.screen.active {
+    display: block; 
+}
+
+#start-screen {
+    text-align: center;
+}
+
+#start-screen h1 {
+    font-size: 2.5rem;
+    color: var(--color-green-medium);
+}
+
+#start-screen .subtitle {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: var(--color-text-secondary);
+}
+
+#quiz-container {
+    position: relative;
+}
+
+#quiz-header {
+    margin-bottom: 20px;
+}
+
+#question-counter {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    font-weight: 700;
+}
+
+#progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%; 
+    background-color: var(--color-green-medium);
+    border-radius: 5px;
+    transition: width 0.4s ease-in-out;
+}
+
+#question-card {
+    background-color: #e8f5e9;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#question-image {
+    width: 100%; 
+    max-height: 300px; 
+    object-fit: contain; 
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#question-text {
+    font-size: 1.4rem;
+    color: var(--color-green-dark);
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+@media (min-width: 600px) {
+    .options-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.option-btn {
+    background-color: var(--color-bg-light);
+    border: 2px solid var(--color-border-light);
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 1.1rem;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    position: relative; 
+}
+
+.option-btn:hover:not(:disabled) {
+    background-color: #c5e1a5;
+    border-color: #8bc34a;
+    transform: translateY(-2px);
+}
+
+.option-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+.option-btn::after {
+    content: '';
+    font-weight: 700;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    transition: transform 0.3s ease-out;
+    font-size: 1.2rem;
+}
+
+.option-btn.correct {
+    background-color: var(--color-green-correct);
+    color: var(--color-white);
+    border-color: var(--color-green-correct-border);
+    animation: pulseCorrect 0.5s ease-out;
+}
+
+.option-btn.correct::after {
+    content: '✓'; 
+    transform: translateY(-50%) scale(1);
+}
+
+.option-btn.incorrect {
+    background-color: var(--color-red-incorrect);
+    color: var(--color-white);
+    border-color: var(--color-red-incorrect-border);
+    animation: shakeIncorrect 0.5s ease-out;
+}
+
+.option-btn.incorrect::after {
+    content: 'X'; 
+    transform: translateY(-50%) scale(1);
+}
+
+.nav-btn {
+    background-color: var(--color-blue-nav);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 28px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    width: 100%;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nav-btn:hover {
+    background-color: var(--color-blue-nav-hover);
+    transform: translateY(-2px);
+}
+
+#start-btn {
+    background-color: var(--color-green-medium);
+    font-size: 1.3rem;
+}
+
+#start-btn:hover {
+     background-color: #45a049;
+}
+
+
+#results-container {
+    text-align: center;
+}
+
+#score-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: var(--color-text-primary);
+}
+
+#result-message {
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 30px;
+    font-style: italic;
+}
+
+.hide {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseCorrect {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shakeIncorrect {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+}
+
+.corner-logo {
+    position: absolute;
+    top: 25px; 
+    right: 30px; 
+    width: 60px; 
+    height: auto;
+    opacity: 0.6; 
+    pointer-events: none; 
+}
+
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position: 0% 0%, 0% 0%, 0% 50%;
+    }
+    50% {
+        background-position: 0% 0%, 0% 0%, 100% 50%;
+    }
+    100% {
+        background-position: 0% 0%, 0% 0%, 0% 50%;
+    }
+}
+
+
+/* --- (NOVO) ESTILOS DO FLASH DE FEEDBACK --- */
+
+#flash-overlay {
+    position: fixed; /* Cobre a tela inteira */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Invisível por padrão */
+    opacity: 0;
+    pointer-events: none; /* Não pode ser clicado */
+    z-index: 999; /* Fica por cima de tudo */
+}
+
+/* Animação de acerto (flash verde claro) */
+@keyframes flashGreen {
+    0% { opacity: 0; background-color: #c8e6c9; } /* Verde bem claro */
+    50% { opacity: 0.4; } /* 40% de opacidade no pico */
+    100% { opacity: 0; background-color: #c8e6c9; }
+}
+
+/* Animação de erro (flash vermelho) */
+@keyframes flashRed {
+    0% { opacity: 0; background-color: var(--color-red-incorrect); }
+    50% { opacity: 0.5; } /* 50% de opacidade no pico */
+    100% { opacity: 0; background-color: var(--color-red-incorrect); }
+}
+
+/* Classes que ativam a animação */
+#flash-overlay.correct-flash {
+    /* Duração de 0.6s, uma vez */
+    animation: flashGreen 0.6s ease-out 1; 
+}
+
+#flash-overlay.incorrect-flash {
+    animation: flashRed 0.6s ease-out 1;
+}
